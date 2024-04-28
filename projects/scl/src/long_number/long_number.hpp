@@ -6,6 +6,7 @@ namespace IBusko {
 	class LongNumber {
 		static const char END = '\0';
 		static const char MINUS = '-';
+		static const char ZERO = '0';
 		static const int NEGATIVE = -1;
 		static const int POSITIVE = 1;
 		

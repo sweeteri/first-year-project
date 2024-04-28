@@ -1,17 +1,12 @@
 #include "long_number.hpp"
 
 namespace IBusko {
-    LongNumber::LongNumber() :
-            numbers(new int[1]),
-            length(1),
-            sign(0) {
+    LongNumber::LongNumber() : numbers(new int[1]), length(1), sign(0) {
         numbers[0] = 0;
     }
 
 
-    LongNumber::LongNumber(const char *const str) :
-            length(get_length(str)),
-            sign(0) {
+    LongNumber::LongNumber(const char *const str) : length(get_length(str)), sign(0) {
         int i = 0;
         if (str[0] == LongNumber::MINUS) {
             sign = 1;
@@ -20,33 +15,33 @@ namespace IBusko {
         }
         numbers = new int[length];
         for (int j = i; j < length + sign; j++) {
-            numbers[j - i] = str[j] - int('0');
+            numbers[j - i] = str[j] - ZERO;
         }
     }
 
 
-    LongNumber::LongNumber(const LongNumber &x) :
-            numbers(new int[x.length]),
-            length(x.length),
-            sign(x.sign) {
+    LongNumber::LongNumber(const LongNumber &x) : numbers(new int[x.length]), length(x.length), sign(x.sign) {
         for (int i = 0; i < length; i++) {
             numbers[i] = x.numbers[i];
         }
 
     }
 
-    LongNumber::LongNumber(LongNumber &&x) :
-            numbers(x.numbers),
-            length(x.length),
-            sign(0) {
-        x.numbers = new int[1];
+    LongNumber::LongNumber(LongNumber &&x) : numbers(x.numbers), length(x.length), sign(0) {
+        length = x.length;
+        sign = x.sign;
+        numbers = x.numbers;
+        x.numbers = nullptr;
+        /*x.numbers = new int[1];
         x.length = 1;
         x.sign = 0;
-        x.numbers[0] = 0;
+        x.numbers[0] = 0;*/
     }
 
     LongNumber::~LongNumber() {
+        length = 0;
         delete[] numbers;
+        numbers = nullptr;
     }
 
     LongNumber &LongNumber::operator=(const char *const str) {
@@ -80,7 +75,12 @@ namespace IBusko {
     }
 
     LongNumber &LongNumber::operator=(LongNumber &&x) {
-        if (&x != this) {
+        length = x.length;
+        sign = x.sign;
+        delete[] numbers;
+        numbers = x.numbers;
+        x.numbers = nullptr;
+        /*if (&x != this) {
             delete[] numbers;
             length = x.length;
             sign = x.sign;
@@ -89,11 +89,12 @@ namespace IBusko {
             x.sign = 0;
             x.length = 1;
             x.numbers[0] = 0;
-        }
+        }*/
         return *this;
     }
 
     bool LongNumber::operator==(const LongNumber &x) const {
+        if (this==&x) return true;
         if (sign != x.sign || length != x.length) {
             return false;
         }
