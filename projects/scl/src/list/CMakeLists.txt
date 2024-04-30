@@ -1,6 +1,6 @@
 target_sources(${SCL_LIB} 
 	PRIVATE
-		
+		doubly_linked_list.cpp
 	PUBLIC
 		doubly_linked_list.hpp
 )

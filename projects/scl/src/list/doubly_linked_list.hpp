@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstddef>
-
 namespace IBusko {
 	template <typename T> 
 	class DoublyLinkedList {
@@ -29,6 +27,6 @@ namespace IBusko {
 			bool has_item(const T& value) const noexcept;
 			void print() const noexcept;
 			bool remove_first(const T& value) noexcept;
-			std::size_t size() const noexcept;
+			int size() const noexcept;
 	};
 }
